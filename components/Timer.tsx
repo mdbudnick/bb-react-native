@@ -24,26 +24,24 @@ interface TimerProps {
 
 const styles = StyleSheet.create({
   pause: {
-    alignSelf: 'flex-start',
-    marginTop: '3%',
+    marginTop: 5,
     marginLeft: 10,
-    fontSize: 25,
+    fontSize: 32,
     display: 'none'
   },
   stop: {
-    alignSelf: 'flex-start',
     height: 20,
     width: 20,
-    marginTop: '3.5%',
+    marginTop: 11,
     marginLeft: 10,
     backgroundColor: 'red',
     display: 'none'
   },
   timer: {
-    alignSelf: 'flex-start',
-    fontSize: screenHeight * 0.05,
-    color: 'white',
-    padding: 10,
+    alignSelf: 'center',
+    fontSize: screenHeight * 0.02,
+    color: 'black',
+    padding: 5,
     paddingVertical: screenHeight * 0.01
   }
 })
@@ -130,7 +128,7 @@ const Timer: FC<TimerProps> = (props) => {
   }, [props.started])
 
   return (
-    <View>
+    <View style={{flexDirection: 'row', alignSelf: 'center'}}>
       <Text style={styles.timer}>{timerText}</Text>
       <TouchableOpacity onPress={props.paused ? resumeTimer : pauseTimer}>
         <Icon
