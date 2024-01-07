@@ -1,6 +1,7 @@
-import React, { type FC } from 'react'
+import React, { type FC, useState } from 'react'
 import { type ConfigInput, type ConfigSetters } from '../ts/shared'
 import {
+  Pressable,
   StyleSheet,
   Text,
   TextInput,
@@ -21,122 +22,169 @@ const styles = StyleSheet.create({
     marginTop: '5%',
     color: 'white',
     width: '50%'
+  },
+  title: {
+    fontSize: 30,
+    fontWeight: '800',
+    marginBottom: 20,
+    borderBottomWidth: 2,
+    textAlign: 'center'
+  },
+  configLine: {
+    flexDirection: 'row',
+    marginBottom: 20
+  },
+  configLabel: {
+    fontSize: 15,
+    fontWeight: '500'
+  },
+  input: {
+    paddingHorizontal: 5,
+    position: 'absolute',
+    left: '100%'
+  },
+  grayOutline: {
+    borderColor: 'gray',
+    borderWidth: 1,
+  },
+  redOutline: {
+    borderColor: 'red',
+    borderWidth: 1
   }
 })
 
 const Config: FC<ControlBarProps> = (props) => {
-  const enforceBreathAndHoldTimeRange = (value: string): number => {
-    if (value) {
-      const numericValue = Number(value)
+  const [validBreathHoldInput, setValidBreathHoldInput] = useState<boolean>(true)
+  const [validHoldInput, setValidHoldInput] = useState<boolean>(true)
+  const [validTimeInput, setValidTimeInput] = useState<boolean>(true)
 
-      // Enforce minimum and maximum values
-      const minValue = 0
-      const maxValue = 15
+  let breathDuration = props.configInput.breathDuration?.toString()
+  let holdDuration = props.configInput.holdDuration?.toString()
+  let inputMinutes = props.configInput.inputMinutes?.toString()
+  let inputSeconds = props.configInput.inputSeconds?.toString()
 
-      return Math.min(Math.max(minValue, numericValue), maxValue)
+  const validateAndSaveConfig = (): void => {
+    let breathNumber = -1
+    let holdNumber = -1
+    let minutesNumber = -1
+    let secondsNumber = -1
+    // Check that all inputs are numbers
+    // We need to set to store on re-render
+    // Trust the validation will not allow bad values out
+    try {
+      breathNumber = Number(breathDuration)
+      props.configSetters.setBreathDuration(breathNumber)
+    } catch {
+      setValidBreathHoldInput(false)
+    }
+    try {
+      holdNumber = Number(holdDuration)
+      props.configSetters.setHoldDuration(holdNumber)
+    } catch {
+      setValidHoldInput(false)
+    }
+    try {
+      minutesNumber = Number(inputMinutes)
+      props.configSetters.setInputMinutes(minutesNumber)
+      secondsNumber = Number(inputSeconds)
+      props.configSetters.setInputSeconds(secondsNumber)
+    } catch {
+      setValidTimeInput(false)
+    }
+
+    if ([validateBreathTime(breathNumber),
+        validateHoldTime(holdNumber), 
+        validateInputCountdown(minutesNumber, secondsNumber)].every(Boolean)) {
+      props.configSetters.setConfigOpen(false)
     }
   }
 
-  const roundAndSetInputSeconds = (value: string): number => {
-    if (value) {
-      const numericValue = Number(value)
-
-      // Enforce minimum and maximum values and step
-      const minValue = 0
-      const maxValue = 45
-      const stepValue = 15
-
-      if (!isNaN(numericValue)) {
-        const clampedValue = Math.min(Math.max(minValue, numericValue), maxValue)
-        const roundedValue = Math.round(clampedValue / stepValue) * stepValue
-
-        props.configSetters.setInputSeconds(roundedValue)
-        return roundedValue
-      } else {
-        props.configSetters.setInputSeconds(minValue)
-        return minValue
-      }
-    }
+  const validateBreathTime = (value: number): boolean => {
+    if (3 <= value && value <= 60) {
+      setValidBreathHoldInput(true)
+      return true
+    } 
+    setValidBreathHoldInput(false)
+    return false
   }
 
-  const roundAndSetInputMinutes = (value: string): number => {
-    if (value) {
-      const numericValue = Number(value)
-
-      // Enforce minimum and maximum values
-      const minValue = 1
-      const maxValue = 60
-
-      if (!isNaN(numericValue)) {
-        const clampedValue = Math.min(Math.max(minValue, numericValue), maxValue)
-
-        props.configSetters.setInputSeconds(clampedValue)
-        return clampedValue
-      } else {
-        // 10 minute default
-        props.configSetters.setInputSeconds(10)
-        return 10
-      }
+  const validateHoldTime = (value: number): boolean => {
+    if (3 <= value && value <= 60) {
+      setValidHoldInput(true)
+      return true
     }
+    setValidHoldInput(false)
+    return false
+  }
+
+  const validateInputCountdown = (minutes: number, seconds: number): boolean => {
+    if ((minutes === 0 && seconds === 0) ||
+    minutes < 0 || seconds < 0 || seconds >= 60 || minutes > 99) {
+      setValidTimeInput(false)
+      return false
+    }
+    setValidTimeInput(true)
+    return true
   }
 
   return (
     <View style={styles.config}>
-      <View>
-        <Text>Breathe (seconds)</Text>
+      <Text style={styles.title}>Settings</Text>
+      <View style={styles.configLine}>
+        <Text style={styles.configLabel}>Breath (seconds){'\t'}</Text>
         <TextInput
           style={
-            props.configInput.validBreathHoldInput ? [] : [commonStyles.red]
+            [styles.input, validBreathHoldInput ? [styles.grayOutline] : [styles.redOutline]]
           }
           keyboardType="numeric"
           maxLength={2}
-          onChangeText={(value) => { value ?
-            props.configSetters.setBreathDuration(
-              enforceBreathAndHoldTimeRange(value)
-            ) : () => {}
-          }}
-          value={props.configInput.breathDuration?.toString()}
+          onChangeText={(value) => { breathDuration = value }}
+          placeholder={props.configInput.breathDuration?.toString()}
         />
       </View>
-      <View>
-        <Text>Hold (seconds)</Text>
+      <View style={styles.configLine}>
+        <Text style={styles.configLabel}>Hold (seconds)</Text>
         <TextInput
-          style={props.configInput.validHoldInput ? [] : [commonStyles.red]}
+          style={
+            [styles.input, validHoldInput ? [styles.grayOutline] : [styles.redOutline]]
+          }
           keyboardType="numeric"
           maxLength={2}
-          onChangeText={(value) => { value ?
-            props.configSetters.setHoldDuration(
-              enforceBreathAndHoldTimeRange(value)  
-            ) : () => {}
-          }}
-          value={props.configInput.holdDuration?.toString()}
+          onChangeText={(value) => { holdDuration = value }}
+          placeholder={props.configInput.holdDuration?.toString()}
         />
       </View>
-      <View>
-        <Text>Countdown Seconds</Text>
+      <View style={styles.configLine}>
+        <Text style={styles.configLabel}>Minutes</Text>
         <TextInput
-          style={props.configInput.validTimeInput ? [] : [commonStyles.red]}
+          style={
+            [styles.input, validTimeInput ? [styles.grayOutline] : [styles.redOutline]]
+          }
           keyboardType="numeric"
           maxLength={2}
-          onChangeText={(value) => value ? roundAndSetInputSeconds(value) : () => {}}
-          value={props.configInput.inputSeconds?.toString()}
-        />
-        <Text>Time (mm:ss)</Text>
-        <TextInput
-          style={props.configInput.validTimeInput ? [] : [commonStyles.red]}
-          keyboardType="numeric"
-          maxLength={2}
-          onChangeText={(value) => value ? roundAndSetInputMinutes(value) : () => {}}
-          value={props.configInput.inputMinutes?.toString()}
+          onChangeText={(value) => { inputMinutes = value }}
+          placeholder={props.configInput.inputMinutes?.toString()}
         />
       </View>
+      <View style={styles.configLine}>
+        <Text style={styles.configLabel}>Seconds</Text>
+        <TextInput
+          style={
+            [styles.input, validTimeInput ? [styles.grayOutline] : [styles.redOutline]]
+          }
+          keyboardType="numeric"
+          maxLength={2}
+          onChangeText={(value) => { inputSeconds = value }}
+          placeholder={props.configInput.inputSeconds?.toString()}
+        />
+        </View>
       <TouchableOpacity
         onPress={() => {
           props.configSetters.setCountDirection(!props.configInput.ascending)
         }}
       >
-        <View>
-          <Text >Count Direction 
+        <View style={styles.configLine}>
+          <Text style={styles.configLabel}>Counting: 
           <Text
             style={{ fontWeight: '800' }}
           >
@@ -145,6 +193,9 @@ const Config: FC<ControlBarProps> = (props) => {
           </Text>
         </View>
       </TouchableOpacity>
+      <Pressable style={commonStyles.bigGreenButton} onPress={validateAndSaveConfig}>
+            <Text>Save Settings</Text>
+      </Pressable>  
     </View>
   )
 }
