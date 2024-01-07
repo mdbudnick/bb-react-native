@@ -18,13 +18,10 @@ interface ControlBarProps {
 
 const styles = StyleSheet.create({
   controlBar: {
-    display: 'flex',
     marginTop: '2%',
     marginBottom: '2%',
     paddingVertical: '1%',
     backgroundColor: 'rgba(255, 255, 255, 0.8)',
-    borderBottomWidth: 1,
-    borderBottomColor: 'rgba(0, 0, 0, 0.2)'
   },
   start: {
     alignSelf: 'flex-start',
