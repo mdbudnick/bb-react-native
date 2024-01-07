@@ -1,8 +1,8 @@
 import React, { type FC, type PropsWithChildren } from 'react'
-import BreathBox from './src/components/BreathBox'
+import BreathBox from './components/BreathBox'
 import './assets/img/buddha-gnome.jpg'
 import { StyleSheet, View } from 'react-native'
-import { screenWidth } from './src/ts/windowDimensions'
+import { screenWidth } from './ts/windowDimensions'
 
 const styles = StyleSheet.create({
   central: {

@@ -1,5 +1,5 @@
 import React, { type FC } from 'react'
-import { type ConfigInput, type ConfigSetters } from 'shared'
+import { type ConfigInput, type ConfigSetters } from '../ts/shared'
 import {
   StyleSheet,
   Text,
@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   View
 } from 'react-native'
-import commonStyles from '../styles/stylesheet'
+import commonStyles from '../ts/stylesheet'
 
 interface ControlBarProps {
   started: boolean
