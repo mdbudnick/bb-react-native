@@ -14,6 +14,7 @@ const styles = StyleSheet.create({
   },
   centralResponsive: {
     marginTop: '15%',
+    alignSelf: 'center',
     width: '80%',
     height: '70%'
   }

@@ -8,6 +8,7 @@ import {
   View
 } from 'react-native'
 import { screenHeight } from '../ts/windowDimensions'
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 interface TimerProps {
   started: boolean
@@ -24,17 +25,15 @@ interface TimerProps {
 const styles = StyleSheet.create({
   pause: {
     alignSelf: 'flex-start',
-    color: '#007bff',
     marginTop: '3%',
     marginLeft: 10,
-    height: '4%',
-    width: '4%',
+    fontSize: 25,
     display: 'none'
   },
   stop: {
     alignSelf: 'flex-start',
-    height: '3%',
-    width: '3%',
+    height: 20,
+    width: 20,
     marginTop: '3.5%',
     marginLeft: 10,
     backgroundColor: 'red',
@@ -134,10 +133,11 @@ const Timer: FC<TimerProps> = (props) => {
     <View>
       <Text style={styles.timer}>{timerText}</Text>
       <TouchableOpacity onPress={props.paused ? resumeTimer : pauseTimer}>
-        <Image
+        <Icon
+          name='play-pause'
+          color='lightgreen'
           style={[styles.pause, { display: props.started ? 'flex' : 'none' }]}
-          source={require('../assets/img/play-pause.svg')}
-        ></Image>
+        ></Icon>
       </TouchableOpacity>
       <Pressable
         style={[styles.stop, { display: props.started ? 'flex' : 'none' }]}

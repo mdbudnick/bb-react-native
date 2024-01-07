@@ -1,5 +1,4 @@
 import React, { type FC } from 'react'
-import '../assets/img/play-pause.svg'
 import Timer from './Timer'
 import { type ConfigInput } from '../ts/shared'
 import { Pressable, StyleSheet, Text, View } from 'react-native'
