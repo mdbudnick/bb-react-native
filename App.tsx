@@ -1,7 +1,7 @@
 import React, { type FC, type PropsWithChildren } from 'react'
+import { AppRegistry, StyleSheet, View } from 'react-native'
 import BreathBox from './components/BreathBox'
 import './assets/img/buddha-gnome.jpg'
-import { StyleSheet, View } from 'react-native'
 import { screenWidth } from './ts/windowDimensions'
 
 const styles = StyleSheet.create({

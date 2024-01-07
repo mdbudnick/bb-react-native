@@ -2,7 +2,7 @@ import React, { type FC } from 'react'
 import '../assets/img/play-pause.svg'
 import Timer from './Timer'
 import { type ConfigInput } from '../ts/shared'
-import { Pressable, StyleSheet, View } from 'react-native'
+import { Pressable, StyleSheet, Text, View } from 'react-native'
 import { screenHeight, screenWidth } from '../ts/windowDimensions'
 
 interface ControlBarProps {
@@ -80,7 +80,7 @@ const ControlBar: FC<ControlBarProps> = (props) => {
           )
         : (
         <Pressable style={styles.start} onPress={startBreathBox}>
-          Start
+          <Text>Start</Text>
         </Pressable>
           )}
     </View>

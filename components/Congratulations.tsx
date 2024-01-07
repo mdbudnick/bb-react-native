@@ -1,6 +1,5 @@
 import React, { type FC } from 'react'
 import { Pressable, StyleSheet, Text, View } from 'react-native'
-import Sound from 'react-native-sound'
 import { screenHeight, screenWidth } from '../ts/windowDimensions'
 
 interface CongratsProps {
@@ -39,19 +38,6 @@ const styles = StyleSheet.create({
 const Congrats: FC<CongratsProps> = (props) => {
   function closeWindow (): void {
     props.setTimeReached(false)
-  }
-  const tone = new Sound(
-    'assets/audio/tone.mp3',
-    Sound.MAIN_BUNDLE,
-    (error: Error | undefined) => {
-      if (error != null) {
-        console.error('Failed to load the sound file', error)
-      }
-    }
-  )
-
-  if (tone?.play != null) {
-    void tone.play()
   }
 
   return (

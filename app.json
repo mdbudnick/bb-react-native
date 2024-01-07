@@ -4,10 +4,10 @@
     "slug": "BreathBox",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/favicon.ico",
+    "icon": "./assets/img/buddha-gnome-smaller.jpg",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/buddha-gnome-smaller.jpg",
+      "image": "./assets/img/buddha-gnome-smaller.jpg",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -19,12 +19,12 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/buddha-gnome.jpg",
+        "foregroundImage": "./assets/img/buddha-gnome.jpg",
         "backgroundColor": "#ffffff"
       }
     },
     "web": {
-      "favicon": "./assets/favicon.ico"
+      "favicon": "./assets/img/buddha-gnome-smaller.jpg"
     }
   }
 }
