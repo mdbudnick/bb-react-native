@@ -136,7 +136,7 @@ const Timer: FC<TimerProps> = (props) => {
       <TouchableOpacity onPress={props.paused ? resumeTimer : pauseTimer}>
         <Image
           style={[styles.pause, { display: props.started ? 'flex' : 'none' }]}
-          source={require('../img/play-pause.svg')}
+          source={require('../assets/img/play-pause.svg')}
         ></Image>
       </TouchableOpacity>
       <Pressable
