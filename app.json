@@ -7,7 +7,7 @@
     "icon": "./assets/favicon.ico",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/buddha-gnome.jpg",
+      "image": "./assets/buddha-gnome-smaller.jpg",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
