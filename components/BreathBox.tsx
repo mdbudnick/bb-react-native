@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
     height: '100%',
     width: '100%',
     borderWidth: 2,
-    borderColor: '#f6786e'
+    borderColor: 'rgb(246, 192, 110)'
   },
   breathBoxInner: {
     display: 'flex',
@@ -23,7 +23,6 @@ const styles = StyleSheet.create({
     height: '100%',
     width: '100%',
     backgroundColor: 'transparent',
-    // backgroundImage: require('../img/buddha-gnome.jpg'),
     resizeMode: 'cover',
     justifyContent: 'center'
   }
@@ -31,6 +30,7 @@ const styles = StyleSheet.create({
 
 const BreathBox: FC = (prop: PropsWithChildren) => {
   const [started, setStarted] = useState<boolean>(false)
+  const [configOpen, setConfigOpen] = useState<boolean>(false)
   const [paused, setPaused] = useState<boolean>(false)
   const [reset, setReset] = useState<boolean>(true)
   const [inhale, setInhale] = useState<boolean>(false)
@@ -59,6 +59,7 @@ const BreathBox: FC = (prop: PropsWithChildren) => {
     validHoldInput
   }
   const configSetters: ConfigSetters = {
+    setConfigOpen,
     setBreathDuration,
     setHoldDuration,
     setInputMinutes,
@@ -144,23 +145,36 @@ const BreathBox: FC = (prop: PropsWithChildren) => {
   }
 
   const ControlBarComponent = (
-    <ControlBar
-      key="ControlBar"
-      started={started}
-      setStarted={setStarted}
-      paused={paused}
-      timeReached={timeReached}
-      setTimeReached={setTimeReached}
-      startFn={startBreathBox}
-      stopFn={stopBreathBox}
-      pauseFn={pauseBreathBox}
-      configInput={configInput}
-    />
+    <View>
+      <ControlBar
+        key="ControlBar"
+        started={started}
+        setStarted={setStarted}
+        paused={paused}
+        timeReached={timeReached}
+        setTimeReached={setTimeReached}
+        startFn={startBreathBox}
+        stopFn={stopBreathBox}
+        pauseFn={pauseBreathBox}
+        configInput={configInput}
+        setConfigOpen={setConfigOpen}
+      />
+      <ActionText
+        started={started}
+        paused={paused}
+        inhale={inhale}
+        holdInhale={holdInhale}
+        exhale={exhale}
+        holdExhale={holdExhale}
+        breathDuration={breathDuration}
+        holdDuration={holdDuration}
+      />
+    </View>
   )
+
   const ConfigComponent = (
     <Config
       key="Config"
-      started={started}
       configInput={configInput}
       configSetters={configSetters}
     />
@@ -181,21 +195,11 @@ const BreathBox: FC = (prop: PropsWithChildren) => {
             []
           )}
       <View style={styles.breathBoxInner}>
-        {started ? ControlBarComponent : [ControlBarComponent, ConfigComponent]}
-        <ActionText
-          started={started}
-          paused={paused}
-          inhale={inhale}
-          holdInhale={holdInhale}
-          exhale={exhale}
-          holdExhale={holdExhale}
-          breathDuration={breathDuration}
-          holdDuration={holdDuration}
-        ></ActionText>
+        { configOpen ? ConfigComponent : ControlBarComponent }
       </View>
       <Circle
-        boundingHeight={500}
-        boundingWidth={500}
+        boundingHeight={200}
+        boundingWidth={200}
         reset={reset}
         inhale={inhale}
         holdInhale={holdInhale}

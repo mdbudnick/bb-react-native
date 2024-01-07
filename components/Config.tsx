@@ -10,7 +10,6 @@ import {
 import commonStyles from '../ts/stylesheet'
 
 interface ControlBarProps {
-  started: boolean
   configInput: ConfigInput
   configSetters: ConfigSetters
 }
@@ -19,77 +18,70 @@ const styles = StyleSheet.create({
   config: {
     display: 'flex',
     flexDirection: 'column',
-    backgroundColor: 'rgba(255, 255, 255, 0.8)',
-    borderBottomWidth: 1,
-    borderBottomColor: 'rgba(0, 0, 0, 0.2)',
     marginTop: '5%',
     color: 'white',
-    height: '12%'
-  },
-  pointDown: {
-    transform: [{ rotate: '90deg' }]
-  },
-  pointUp: {
-    transform: [{ rotate: '-90deg' }]
+    width: '50%'
   }
 })
 
 const Config: FC<ControlBarProps> = (props) => {
   const enforceBreathAndHoldTimeRange = (value: string): number => {
-    const numericValue = Number(value)
+    if (value) {
+      const numericValue = Number(value)
 
-    // Enforce minimum and maximum values
-    const minValue = 3
-    const maxValue = 15
+      // Enforce minimum and maximum values
+      const minValue = 0
+      const maxValue = 15
 
-    return Math.min(Math.max(minValue, numericValue), maxValue)
+      return Math.min(Math.max(minValue, numericValue), maxValue)
+    }
   }
 
   const roundAndSetInputSeconds = (value: string): number => {
-    const numericValue = Number(value)
+    if (value) {
+      const numericValue = Number(value)
 
-    // Enforce minimum and maximum values and step
-    const minValue = 0
-    const maxValue = 45
-    const stepValue = 15
+      // Enforce minimum and maximum values and step
+      const minValue = 0
+      const maxValue = 45
+      const stepValue = 15
 
-    if (!isNaN(numericValue)) {
-      const clampedValue = Math.min(Math.max(minValue, numericValue), maxValue)
-      const roundedValue = Math.round(clampedValue / stepValue) * stepValue
+      if (!isNaN(numericValue)) {
+        const clampedValue = Math.min(Math.max(minValue, numericValue), maxValue)
+        const roundedValue = Math.round(clampedValue / stepValue) * stepValue
 
-      props.configSetters.setInputSeconds(roundedValue)
-      return roundedValue
-    } else {
-      props.configSetters.setInputSeconds(minValue)
-      return minValue
+        props.configSetters.setInputSeconds(roundedValue)
+        return roundedValue
+      } else {
+        props.configSetters.setInputSeconds(minValue)
+        return minValue
+      }
     }
   }
 
   const roundAndSetInputMinutes = (value: string): number => {
-    const numericValue = Number(value)
+    if (value) {
+      const numericValue = Number(value)
 
-    // Enforce minimum and maximum values
-    const minValue = 1
-    const maxValue = 60
+      // Enforce minimum and maximum values
+      const minValue = 1
+      const maxValue = 60
 
-    if (!isNaN(numericValue)) {
-      const clampedValue = Math.min(Math.max(minValue, numericValue), maxValue)
+      if (!isNaN(numericValue)) {
+        const clampedValue = Math.min(Math.max(minValue, numericValue), maxValue)
 
-      props.configSetters.setInputSeconds(clampedValue)
-      return clampedValue
-    } else {
-      // 10 minute default
-      props.configSetters.setInputSeconds(10)
-      return 10
+        props.configSetters.setInputSeconds(clampedValue)
+        return clampedValue
+      } else {
+        // 10 minute default
+        props.configSetters.setInputSeconds(10)
+        return 10
+      }
     }
   }
 
   return (
-    <View
-      style={
-        props.started ? styles.config : [styles.config, commonStyles.hidden]
-      }
-    >
+    <View style={styles.config}>
       <View>
         <Text>Breathe (seconds)</Text>
         <TextInput
@@ -98,12 +90,12 @@ const Config: FC<ControlBarProps> = (props) => {
           }
           keyboardType="numeric"
           maxLength={2}
-          onChangeText={(value) => {
+          onChangeText={(value) => { value ?
             props.configSetters.setBreathDuration(
               enforceBreathAndHoldTimeRange(value)
-            )
+            ) : () => {}
           }}
-          value={props.configInput.breathDuration.toString()}
+          value={props.configInput.breathDuration?.toString()}
         />
       </View>
       <View>
@@ -112,12 +104,12 @@ const Config: FC<ControlBarProps> = (props) => {
           style={props.configInput.validHoldInput ? [] : [commonStyles.red]}
           keyboardType="numeric"
           maxLength={2}
-          onChangeText={(value) => {
+          onChangeText={(value) => { value ?
             props.configSetters.setHoldDuration(
-              enforceBreathAndHoldTimeRange(value)
-            )
+              enforceBreathAndHoldTimeRange(value)  
+            ) : () => {}
           }}
-          value={props.configInput.holdDuration.toString()}
+          value={props.configInput.holdDuration?.toString()}
         />
       </View>
       <View>
@@ -126,16 +118,16 @@ const Config: FC<ControlBarProps> = (props) => {
           style={props.configInput.validTimeInput ? [] : [commonStyles.red]}
           keyboardType="numeric"
           maxLength={2}
-          onChangeText={(value) => roundAndSetInputSeconds(value)}
-          value={props.configInput.inputSeconds.toString()}
+          onChangeText={(value) => value ? roundAndSetInputSeconds(value) : () => {}}
+          value={props.configInput.inputSeconds?.toString()}
         />
         <Text>Time (mm:ss)</Text>
         <TextInput
           style={props.configInput.validTimeInput ? [] : [commonStyles.red]}
           keyboardType="numeric"
           maxLength={2}
-          onChangeText={(value) => roundAndSetInputMinutes(value)}
-          value={props.configInput.inputMinutes.toString()}
+          onChangeText={(value) => value ? roundAndSetInputMinutes(value) : () => {}}
+          value={props.configInput.inputMinutes?.toString()}
         />
       </View>
       <TouchableOpacity
@@ -143,14 +135,15 @@ const Config: FC<ControlBarProps> = (props) => {
           props.configSetters.setCountDirection(!props.configInput.ascending)
         }}
       >
-        <Text>Count Direction</Text>
-        <Text
-          style={
-            props.configInput.ascending ? styles.pointUp : styles.pointDown
-          }
-        >
-          &#10148;
-        </Text>
+        <View>
+          <Text >Count Direction 
+          <Text
+            style={{ fontWeight: '800' }}
+          >
+          {'\t'}{'\t'}{props.configInput.ascending ? 'UP' : 'DOWN'}
+          </Text>
+          </Text>
+        </View>
       </TouchableOpacity>
     </View>
   )
