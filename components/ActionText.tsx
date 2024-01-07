@@ -6,9 +6,9 @@ const INHALE_COLOR = '#0f5362'
 const EXHALE_COLOR = '#c08845'
 const RESET_ORANGE = '#f6786e'
 
-const INHALE_SIZE = 8
-const EXHALE_SIZE = 4
-const DEFAULT_ACTION_FONT_SIZE = 5
+const INHALE_SIZE = 50
+const EXHALE_SIZE = 25
+const DEFAULT_ACTION_FONT_SIZE = 30
 const DEFAULT_TEXT = 'Breath Box'
 const PAUSE_TEXT = 'Paused'
 
