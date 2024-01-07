@@ -6,14 +6,14 @@ import { screenWidth } from './ts/windowDimensions'
 
 const styles = StyleSheet.create({
   central: {
-    marginTop: '10%',
+    marginTop: '35%',
     alignSelf: 'center',
     width: '30%',
     height: '80%',
     fontFamily: 'Haettenschweiler, "Arial Narrow Bold", sans-serif'
   },
   centralResponsive: {
-    marginTop: '15%',
+    marginTop: '35%',
     alignSelf: 'center',
     width: '80%',
     height: '70%'
