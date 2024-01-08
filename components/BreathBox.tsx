@@ -62,22 +62,38 @@ const BreathBox: FC = (prop: PropsWithChildren) => {
 
   function animateBreathing (): void {
     // Inhale (up)
-    setInhale(!inhale)
+    setInhale(true)
+    setHoldInhale(false)
+    setExhale(false)
+    setHoldExhale(false)
 
     // Hold In (right)
     SharedIntervals.setHoldInAnimation(
       setTimeout(() => {
-        setHoldInhale(!holdInhale)
+        setInhale(false)
+        setHoldInhale(true)
+        setExhale(false)
+        setHoldExhale(false)
         // Exhale (down)
         SharedIntervals.setExhaleAnimation(
           setTimeout(() => {
-            setExhale(!exhale)
+            setInhale(false)
+            setHoldInhale(false)
+            setExhale(true)
+            setHoldExhale(false)
             // Hold out (left)
-            SharedIntervals.setHoldOutAnimation(
+            SharedIntervals.setHoldExhaleAnimation(
               setTimeout(() => {
-                setHoldExhale(!holdExhale)
+                setInhale(false)
+                setHoldInhale(false)
+                setExhale(false)
+                setHoldExhale(true)
                 SharedIntervals.setInhaleAnimation(
                   setTimeout(() => {
+                    setInhale(false)
+                    setHoldInhale(false)
+                    setExhale(false)
+                    setHoldExhale(false)
                     animateBreathing() // Restart the cycle
                   }, holdDuration * 1000)
                 )
@@ -92,20 +108,25 @@ const BreathBox: FC = (prop: PropsWithChildren) => {
   function startBreathBox (): void {
     setStarted(true)
     setPaused(false)
+    setReset(false)
     animateBreathing()
   }
 
   function stopBreathBox (): void {
     SharedIntervals.resetAnimations()
+    setInhale(false)
+    setHoldInhale(false)
+    setExhale(false)
+    setHoldExhale(false)
     setStarted(false)
     setPaused(false)
-    setReset(!reset)
+    setReset(true)
   }
 
   function pauseBreathBox (): void {
     SharedIntervals.resetAnimations()
     setPaused(true)
-    setReset(!reset)
+    setReset(true)
   }
 
   const ControlBarComponent = (
