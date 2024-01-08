@@ -40,6 +40,7 @@ interface ActionTextProps {
 }
 
 const ActionText: FC<ActionTextProps> = (props) => {
+  const firstMount = useRef(true)
   const textSize = useRef(new Animated.Value(DEFAULT_ACTION_FONT_SIZE)).current
   const [actionText, setActionText] = useState(DEFAULT_TEXT)
   const [textStyle, setTextStyle] = useState(styles.action)
@@ -85,49 +86,61 @@ const ActionText: FC<ActionTextProps> = (props) => {
   })
 
   useEffect(() => {
-    if (!props.started) {
+    if (!firstMount.current && !props.started) {
       setActionText(DEFAULT_TEXT)
       defaultSizeAnimation.start()
     }
   }, [props.started])
 
   useEffect(() => {
-    if (props.started && props.paused) {
+    if (!firstMount.current && props.started && props.paused) {
       setActionText(PAUSE_TEXT)
       defaultSizeAnimation.start()
     }
   }, [props.paused])
 
   useEffect(() => {
-    // Inhale (up)
-    SharedIntervals.setInhaleCountdownInterval(
-      startCountdownDecrement('Inhale', props.breathDuration)
-    )
-    setTextStyle({ ...textStyle, color: INHALE_COLOR })
-    inhaleSizeAnimation.start()
+    if (!firstMount.current) {
+      // Inhale (up)
+      SharedIntervals.setInhaleCountdownInterval(
+        startCountdownDecrement('Inhale', props.breathDuration)
+      )
+      setTextStyle({ ...textStyle, color: INHALE_COLOR })
+      inhaleSizeAnimation.start()
+    }
   }, [props.inhale])
 
   useEffect(() => {
-    SharedIntervals.setHoldInCountdownInterval(
-      startCountdownDecrement('Hold', props.holdDuration)
-    )
-    setTextStyle({ ...textStyle, color: INHALE_COLOR })
+    if (!firstMount.current) {
+      SharedIntervals.setHoldInCountdownInterval(
+        startCountdownDecrement('Hold', props.holdDuration)
+      )
+      setTextStyle({ ...textStyle, color: INHALE_COLOR })
+    }
   }, [props.holdInhale])
 
   useEffect(() => {
-    SharedIntervals.setExhaleCountdownInterval(
-      startCountdownDecrement('Exhale', props.breathDuration)
-    )
-    setTextStyle({ ...textStyle, color: EXHALE_COLOR })
-    exhaleSizeAnimation.start()
+    if (!firstMount.current) {
+      SharedIntervals.setExhaleCountdownInterval(
+        startCountdownDecrement('Exhale', props.breathDuration)
+      )
+      setTextStyle({ ...textStyle, color: EXHALE_COLOR })
+      exhaleSizeAnimation.start()
+    }
   }, [props.exhale])
 
   useEffect(() => {
-    SharedIntervals.setHoldOutCountdownInterval(
-      startCountdownDecrement('Hold', props.holdDuration)
-    )
-    setTextStyle({ ...textStyle, color: EXHALE_COLOR })
+    if (!firstMount.current) {
+      SharedIntervals.setHoldOutCountdownInterval(
+        startCountdownDecrement('Hold', props.holdDuration)
+      )
+      setTextStyle({ ...textStyle, color: EXHALE_COLOR })
+    }
   }, [props.holdExhale])
+
+  useEffect(() => {
+    if (firstMount.current) firstMount.current = false
+  }, [])
 
   return <Text style={[styles.action, textStyle]}>{actionText}</Text>
 }
