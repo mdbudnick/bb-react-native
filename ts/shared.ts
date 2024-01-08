@@ -12,12 +12,10 @@ export interface ConfigInput {
   inputMinutes: number
   inputSeconds: number
   ascending: boolean
-  validTimeInput: boolean
-  validBreathHoldInput: boolean
-  validHoldInput: boolean
 }
 
 export interface ConfigSetters {
+  setConfigOpen: React.Dispatch<React.SetStateAction<boolean>>
   setBreathDuration: React.Dispatch<React.SetStateAction<number>>
   setHoldDuration: React.Dispatch<React.SetStateAction<number>>
   setInputMinutes: React.Dispatch<React.SetStateAction<number>>
