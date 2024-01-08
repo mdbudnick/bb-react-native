@@ -13,10 +13,16 @@ const commonStyles = StyleSheet.create({
   hidden: {
     display: 'none',
   },
-  red: {
-    borderColor: 'red',
-    borderWidth: 1,
-  },
+  bigGreenButton: {
+    alignSelf: 'flex-start',
+    fontSize: 25,
+    borderWidth: 4,
+    borderColor: 'green',
+    backgroundColor: 'lightgreen',
+    borderRadius: 25,
+    padding: 20,
+    paddingVertical: 10
+  }
 })
 
 export default commonStyles
