@@ -44,19 +44,12 @@ const BreathBox: FC = (prop: PropsWithChildren) => {
   const [inputMinutes, setInputMinutes] = useState<number>(10)
   const [inputSeconds, setInputSeconds] = useState<number>(0)
   const [ascending, setCountDirection] = useState<boolean>(true)
-  const [validTimeInput, setValidTimeInput] = useState<boolean>(true)
-  const [validBreathHoldInput, setValidBreathHoldInput] =
-    useState<boolean>(true)
-  const [validHoldInput, setValidHoldInput] = useState<boolean>(true)
   const configInput: ConfigInput = {
     breathDuration,
     holdDuration,
     inputMinutes,
     inputSeconds,
-    ascending,
-    validTimeInput,
-    validBreathHoldInput,
-    validHoldInput
+    ascending
   }
   const configSetters: ConfigSetters = {
     setConfigOpen,
@@ -96,36 +89,7 @@ const BreathBox: FC = (prop: PropsWithChildren) => {
     )
   }
 
-  function validInputs (): boolean {
-    let valid = true
-    if (inputMinutes === 0 && inputSeconds === 0) {
-      setValidTimeInput(false)
-      valid = false
-    } else {
-      setValidTimeInput(true)
-    }
-
-    if (breathDuration === 0) {
-      setValidBreathHoldInput(false)
-      valid = false
-    } else {
-      setValidBreathHoldInput(true)
-    }
-
-    if (holdDuration === 0) {
-      setValidHoldInput(false)
-      valid = false
-    } else {
-      setValidHoldInput(true)
-    }
-
-    return valid
-  }
-
   function startBreathBox (): void {
-    if (!validInputs() || (started && !paused)) {
-      return
-    }
     setStarted(true)
     setPaused(false)
     animateBreathing()
@@ -146,6 +110,16 @@ const BreathBox: FC = (prop: PropsWithChildren) => {
 
   const ControlBarComponent = (
     <View>
+      <ActionText
+        started={started}
+        paused={paused}
+        inhale={inhale}
+        holdInhale={holdInhale}
+        exhale={exhale}
+        holdExhale={holdExhale}
+        breathDuration={breathDuration}
+        holdDuration={holdDuration}
+      />
       <ControlBar
         key="ControlBar"
         started={started}
@@ -158,16 +132,6 @@ const BreathBox: FC = (prop: PropsWithChildren) => {
         pauseFn={pauseBreathBox}
         configInput={configInput}
         setConfigOpen={setConfigOpen}
-      />
-      <ActionText
-        started={started}
-        paused={paused}
-        inhale={inhale}
-        holdInhale={holdInhale}
-        exhale={exhale}
-        holdExhale={holdExhale}
-        breathDuration={breathDuration}
-        holdDuration={holdDuration}
       />
     </View>
   )
