@@ -1,4 +1,4 @@
-import React, { type FC, useEffect } from 'react'
+import React, { type FC, useEffect, useRef } from 'react'
 import { Easing } from 'react-native'
 import Animated, { useSharedValue, withTiming } from 'react-native-reanimated'
 
@@ -21,6 +21,11 @@ interface CircleProps {
 }
 
 const Circle: FC<CircleProps> = (props) => {
+  const firstMount = useRef(true);
+  useEffect(() => {
+    if (firstMount.current) firstMount.current = false
+  }, [props.reset])
+
   let circleSize = useSharedValue(SMALL_CIRCLE_SIZE)
   let circleBottom = useSharedValue(20)
   let circleLeft = useSharedValue(20)
@@ -54,28 +59,38 @@ const Circle: FC<CircleProps> = (props) => {
   }
 
   useEffect(() => {
-    console.log("reset")
-    holdExhaleAnimation()
+    if (!firstMount.current) {
+      console.log("reset")
+      holdExhaleAnimation()
+    }
   }, [props.reset])
 
   useEffect(() => {
-    console.log("inhale")
-    inhaleAnimation()
+    if (!firstMount.current) {
+      console.log("inhale")
+      inhaleAnimation()
+    }
   }, [props.inhale])
 
   useEffect(() => {
-    console.log("holdInhale")
-    holdInhaleAnimation()
+    if (!firstMount.current) {
+      console.log("holdInhale")
+      holdInhaleAnimation()
+    }
   }, [props.holdInhale])
 
   useEffect(() => {
-    console.log("exhale")
-    exhaleAnimation()
+    if (!firstMount.current) {
+      console.log("exhale")
+      exhaleAnimation()
+    }
   }, [props.exhale])
 
   useEffect(() => {
-    console.log("holdExhale")
-    holdExhaleAnimation()
+    if (!firstMount.current) {
+      console.log("holdExhale")
+      holdExhaleAnimation()
+    }
   }, [props.holdExhale])
 
   return <Animated.View style={{
