@@ -18,10 +18,7 @@ interface CircleProps {
 }
 
 const Circle: FC<CircleProps> = (props) => {
-  const firstMount = useRef(true);
-  useEffect(() => {
-    if (firstMount.current) firstMount.current = false
-  }, [props.reset])
+  const firstMount = useRef(true)
 
   let circleSize = useSharedValue(SMALL_CIRCLE_SIZE)
   let circleBottom = useSharedValue(20)
@@ -99,6 +96,10 @@ const Circle: FC<CircleProps> = (props) => {
       holdExhaleAnimation()
     }
   }, [props.holdExhale])
+
+  useEffect(() => {
+    if (firstMount.current) firstMount.current = false
+  }, [])
 
   return <Animated.View style={{
     position: 'absolute',
