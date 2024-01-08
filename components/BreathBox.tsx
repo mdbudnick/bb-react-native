@@ -66,36 +66,36 @@ const BreathBox: FC = (prop: PropsWithChildren) => {
 
   function animateBreathing (): void {
     // Inhale (up)
+    setActionText("Inhale")
     setInhale(true)
     setHoldInhale(false)
     setExhale(false)
     setHoldExhale(false)
-    setActionText("Inhale")
 
     // Hold In (right)
     SharedIntervals.setHoldInAnimation(
       setTimeout(() => {
+        setActionText("Hold")
         setInhale(false)
         setHoldInhale(true)
         setExhale(false)
         setHoldExhale(false)
-        setActionText("Hold")
         // Exhale (down)
         SharedIntervals.setExhaleAnimation(
           setTimeout(() => {
+            setActionText("Exhale")
             setInhale(false)
             setHoldInhale(false)
             setExhale(true)
             setHoldExhale(false)
-            setActionText("Exhale")
             // Hold out (left)
             SharedIntervals.setHoldExhaleAnimation(
               setTimeout(() => {
+                setActionText("Hold")
                 setInhale(false)
                 setHoldInhale(false)
                 setExhale(false)
                 setHoldExhale(true)
-                setActionText("Hold")
                 SharedIntervals.setInhaleAnimation(
                   setTimeout(() => {
                     setInhale(false)
