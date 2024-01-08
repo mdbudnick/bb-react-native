@@ -1,5 +1,5 @@
 import React, { type FC } from 'react'
-import { Pressable, StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { screenHeight, screenWidth } from '../ts/windowDimensions'
 
 interface CongratsProps {
@@ -47,11 +47,11 @@ const Congrats: FC<CongratsProps> = (props) => {
         {'\n'}
         You breathed for {props.inputMinutes} minutes and {props.inputSeconds}{' '}
         seconds!
+        {'\n'}
       </Text>
-      {'\n'}
-      <Pressable style={styles.closeCongrats} onPress={closeWindow}>
-        Close
-      </Pressable>
+      <TouchableOpacity style={styles.closeCongrats} onPress={closeWindow}>
+        <Text>{'\n'}Close{'\n'}</Text>
+      </TouchableOpacity>
     </View>
   )
 }
