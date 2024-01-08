@@ -55,7 +55,7 @@ class Timeouts {
     return true
   }
 
-  setHoldOutAnimation (timer: ReturnType<typeof setTimeout>): boolean {
+  setHoldExhaleAnimation (timer: ReturnType<typeof setTimeout>): boolean {
     if (this.holdOutAnimation !== null) {
       clearTimeout(this.holdOutAnimation)
     }
