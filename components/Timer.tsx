@@ -8,7 +8,7 @@ import {
   View
 } from 'react-native'
 import { screenHeight } from '../ts/windowDimensions'
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
 interface TimerProps {
   started: boolean
