@@ -1,5 +1,5 @@
 import React, { type FC, useEffect, useRef, useState } from 'react'
-import { Animated, StyleSheet, Text } from 'react-native'
+import { StyleSheet, Text } from 'react-native'
 import { SharedIntervals } from '../ts/sharedIntervals'
 
 const INHALE_COLOR = '#0f5362'
@@ -41,7 +41,6 @@ interface ActionTextProps {
 
 const ActionText: FC<ActionTextProps> = (props) => {
   const firstMount = useRef(true)
-  const textSize = useRef(new Animated.Value(DEFAULT_ACTION_FONT_SIZE)).current
   const [textStyle, setTextStyle] = useState(styles.action)
   const [displayText, setDisplayText] = useState<string>(props.text)
 
@@ -52,7 +51,6 @@ const ActionText: FC<ActionTextProps> = (props) => {
     countdownInterval = setInterval(() => {
       --time
       if (time !== 0) {
-        console.log('countdownTime ' + time)
         setDisplayText(props.text + '\r\n' + time)
       } else {
         setDisplayText(props.text)
@@ -67,34 +65,14 @@ const ActionText: FC<ActionTextProps> = (props) => {
     return countdownInterval
   }
 
-  const defaultSizeAnimation = Animated.timing(textSize, {
-    toValue: DEFAULT_ACTION_FONT_SIZE,
-    duration: 1000,
-    useNativeDriver: false
-  })
-
-  const inhaleSizeAnimation = Animated.timing(textSize, {
-    toValue: INHALE_SIZE,
-    duration: props.breathDuration * 1000,
-    useNativeDriver: false
-  })
-
-  const exhaleSizeAnimation = Animated.timing(textSize, {
-    toValue: EXHALE_SIZE,
-    duration: props.breathDuration * 1000,
-    useNativeDriver: false
-  })
-
   useEffect(() => {
     if (!firstMount.current && !props.started) {
-      defaultSizeAnimation.start()
       setDisplayText(props.text)
     }
   }, [props.started])
 
   useEffect(() => {
     if (!firstMount.current && props.started && props.paused) {
-      defaultSizeAnimation.start()
       setDisplayText(props.text)
     }
   }, [props.paused])
@@ -106,7 +84,6 @@ const ActionText: FC<ActionTextProps> = (props) => {
         startCountdownDecrement(props.breathDuration)
       )
       setTextStyle({ ...textStyle, color: INHALE_COLOR })
-      inhaleSizeAnimation.start()
     }
   }, [props.inhale])
 
@@ -125,7 +102,6 @@ const ActionText: FC<ActionTextProps> = (props) => {
         startCountdownDecrement(props.breathDuration)
       )
       setTextStyle({ ...textStyle, color: EXHALE_COLOR })
-      exhaleSizeAnimation.start()
     }
   }, [props.exhale])
 
