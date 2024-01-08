@@ -44,16 +44,20 @@ const ActionText: FC<ActionTextProps> = (props) => {
   const [textStyle, setTextStyle] = useState(styles.action)
   const [displayText, setDisplayText] = useState<string>(props.text)
 
-  const startCountdownDecrement = (
+  const startCountdown = (
     time: number
   ): ReturnType<typeof setInterval> => {
+    setDisplayText(props.text)
     let countdownInterval: ReturnType<typeof setInterval> | null
+    let target = props.ascending ? time : 0
+    time = props.ascending ? 1 : time
     countdownInterval = setInterval(() => {
-      --time
-      if (time !== 0) {
+      time += props.ascending ? 1 : -1
+      if (time !== (props.ascending ? target : 1)) {
         setDisplayText(props.text + '\r\n' + time)
       } else {
-        setDisplayText(props.text)
+        // We don't display 0
+        setDisplayText(props.text + '\r\n' + time)
         // It cancels itself
         clearInterval(countdownInterval!)
         countdownInterval = null
@@ -81,7 +85,7 @@ const ActionText: FC<ActionTextProps> = (props) => {
     if (!firstMount.current && props.inhale) {
       // Inhale (up)
       SharedIntervals.setInhaleCountdownInterval(
-        startCountdownDecrement(props.breathDuration)
+        startCountdown(props.breathDuration)
       )
       setTextStyle({ ...textStyle, color: INHALE_COLOR })
     }
@@ -90,7 +94,7 @@ const ActionText: FC<ActionTextProps> = (props) => {
   useEffect(() => {
     if (!firstMount.current && props.holdInhale) {
       SharedIntervals.setHoldInCountdownInterval(
-        startCountdownDecrement(props.holdDuration)
+        startCountdown(props.holdDuration)
       )
       setTextStyle({ ...textStyle, color: INHALE_COLOR })
     }
@@ -99,7 +103,7 @@ const ActionText: FC<ActionTextProps> = (props) => {
   useEffect(() => {
     if (!firstMount.current && props.exhale) {
       SharedIntervals.setExhaleCountdownInterval(
-        startCountdownDecrement(props.breathDuration)
+        startCountdown(props.breathDuration)
       )
       setTextStyle({ ...textStyle, color: EXHALE_COLOR })
     }
@@ -108,7 +112,7 @@ const ActionText: FC<ActionTextProps> = (props) => {
   useEffect(() => {
     if (!firstMount.current && props.holdExhale) {
       SharedIntervals.setHoldOutCountdownInterval(
-        startCountdownDecrement(props.holdDuration)
+        startCountdown(props.holdDuration)
       )
       setTextStyle({ ...textStyle, color: EXHALE_COLOR })
     }
