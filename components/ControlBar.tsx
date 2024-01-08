@@ -2,7 +2,8 @@ import React, { type FC } from 'react'
 import Timer from './Timer'
 import { type ConfigInput } from '../ts/shared'
 import { Pressable, StyleSheet, Text, View } from 'react-native'
-import { screenHeight, screenWidth } from '../ts/windowDimensions'
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
+import commonStyles from '../ts/stylesheet'
 
 interface ControlBarProps {
   started: boolean
@@ -14,6 +15,7 @@ interface ControlBarProps {
   stopFn: () => void
   pauseFn: () => void
   configInput: ConfigInput
+  setConfigOpen: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 const styles = StyleSheet.create({
@@ -23,16 +25,7 @@ const styles = StyleSheet.create({
     paddingVertical: '1%',
     backgroundColor: 'rgba(255, 255, 255, 0.8)',
   },
-  start: {
-    alignSelf: 'flex-start',
-    fontSize: screenHeight * 0.05,
-    borderWidth: 4,
-    borderColor: 'green',
-    backgroundColor: 'lightgreen',
-    borderRadius: screenWidth * 0.05,
-    padding: 10,
-    paddingVertical: screenHeight * 0.01
-  },
+  config: { fontSize: 28, margin: 10, color: 'grey' },
   topBuffer: {
     marginTop: '19%'
   }
@@ -75,9 +68,14 @@ const ControlBar: FC<ControlBarProps> = (props) => {
         />
           )
         : (
-        <Pressable style={styles.start} onPress={startBreathBox}>
-          <Text>Start</Text>
-        </Pressable>
+          <View style={{flexDirection: 'row'}}>
+          <Pressable style={commonStyles.bigGreenButton} onPress={startBreathBox}>
+            <Text>Start</Text>
+          </Pressable>
+          <Pressable onPress={() => props.setConfigOpen(true)}>
+            <Icon style={ styles.config } name="cog"></Icon>
+          </Pressable>
+        </View>
           )}
     </View>
   )
