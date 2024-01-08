@@ -8,6 +8,9 @@ import { SharedIntervals } from '../ts/sharedIntervals'
 import { type ConfigSetters, type ConfigInput } from '../ts/shared'
 import { StyleSheet, View } from 'react-native'
 
+const DEFAULT_TEXT = 'Breath Box'
+const PAUSE_TEXT = 'Paused'
+
 const styles = StyleSheet.create({
   breathBox: {
     position: 'relative',
@@ -38,6 +41,7 @@ const BreathBox: FC = (prop: PropsWithChildren) => {
   const [exhale, setExhale] = useState<boolean>(false)
   const [holdExhale, setHoldExhale] = useState<boolean>(false)
   const [timeReached, setTimeReached] = useState<boolean>(false)
+  const [actionText, setActionText] = useState<string>(DEFAULT_TEXT)
   // Config Variables
   const [breathDuration, setBreathDuration] = useState<number>(3)
   const [holdDuration, setHoldDuration] = useState<number>(3)
@@ -66,6 +70,7 @@ const BreathBox: FC = (prop: PropsWithChildren) => {
     setHoldInhale(false)
     setExhale(false)
     setHoldExhale(false)
+    setActionText("Inhale")
 
     // Hold In (right)
     SharedIntervals.setHoldInAnimation(
@@ -74,6 +79,7 @@ const BreathBox: FC = (prop: PropsWithChildren) => {
         setHoldInhale(true)
         setExhale(false)
         setHoldExhale(false)
+        setActionText("Hold")
         // Exhale (down)
         SharedIntervals.setExhaleAnimation(
           setTimeout(() => {
@@ -81,6 +87,7 @@ const BreathBox: FC = (prop: PropsWithChildren) => {
             setHoldInhale(false)
             setExhale(true)
             setHoldExhale(false)
+            setActionText("Exhale")
             // Hold out (left)
             SharedIntervals.setHoldExhaleAnimation(
               setTimeout(() => {
@@ -88,6 +95,7 @@ const BreathBox: FC = (prop: PropsWithChildren) => {
                 setHoldInhale(false)
                 setExhale(false)
                 setHoldExhale(true)
+                setActionText("Hold")
                 SharedIntervals.setInhaleAnimation(
                   setTimeout(() => {
                     setInhale(false)
@@ -105,6 +113,14 @@ const BreathBox: FC = (prop: PropsWithChildren) => {
     )
   }
 
+  function stopAnimations (): void {
+    setInhale(false)
+    setHoldInhale(false)
+    setExhale(false)
+    setHoldExhale(false)
+    SharedIntervals.resetAnimations()
+  }
+
   function startBreathBox (): void {
     setStarted(true)
     setPaused(false)
@@ -113,25 +129,24 @@ const BreathBox: FC = (prop: PropsWithChildren) => {
   }
 
   function stopBreathBox (): void {
-    SharedIntervals.resetAnimations()
-    setInhale(false)
-    setHoldInhale(false)
-    setExhale(false)
-    setHoldExhale(false)
+    stopAnimations()
     setStarted(false)
     setPaused(false)
     setReset(true)
+    setActionText(DEFAULT_TEXT)
   }
 
   function pauseBreathBox (): void {
-    SharedIntervals.resetAnimations()
+    stopAnimations()
     setPaused(true)
     setReset(true)
+    setActionText(PAUSE_TEXT)
   }
 
   const ControlBarComponent = (
     <View>
       <ActionText
+        text={actionText}
         started={started}
         paused={paused}
         inhale={inhale}
@@ -140,6 +155,7 @@ const BreathBox: FC = (prop: PropsWithChildren) => {
         holdExhale={holdExhale}
         breathDuration={breathDuration}
         holdDuration={holdDuration}
+        ascending={ascending}
       />
       <ControlBar
         key="ControlBar"

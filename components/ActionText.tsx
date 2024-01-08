@@ -9,8 +9,6 @@ const RESET_ORANGE = '#f6786e'
 const INHALE_SIZE = 50
 const EXHALE_SIZE = 25
 const DEFAULT_ACTION_FONT_SIZE = 30
-const DEFAULT_TEXT = 'Breath Box'
-const PAUSE_TEXT = 'Paused'
 
 const styles = StyleSheet.create({
   action: {
@@ -29,6 +27,7 @@ const styles = StyleSheet.create({
 })
 
 interface ActionTextProps {
+  text: string
   started: boolean
   paused: boolean
   inhale: boolean
@@ -37,32 +36,33 @@ interface ActionTextProps {
   holdExhale: boolean
   breathDuration: number
   holdDuration: number
+  ascending: boolean
 }
 
 const ActionText: FC<ActionTextProps> = (props) => {
   const firstMount = useRef(true)
   const textSize = useRef(new Animated.Value(DEFAULT_ACTION_FONT_SIZE)).current
-  const [actionText, setActionText] = useState(DEFAULT_TEXT)
   const [textStyle, setTextStyle] = useState(styles.action)
+  const [displayText, setDisplayText] = useState<string>(props.text)
 
   const startCountdownDecrement = (
-    text: string,
     time: number
   ): ReturnType<typeof setInterval> => {
     let countdownInterval: ReturnType<typeof setInterval> | null
     countdownInterval = setInterval(() => {
       --time
       if (time !== 0) {
-        setActionText(text + '\r\n' + time)
+        console.log('countdownTime ' + time)
+        setDisplayText(props.text + '\r\n' + time)
       } else {
-        setActionText(text)
+        setDisplayText(props.text)
         // It cancels itself
         clearInterval(countdownInterval!)
         countdownInterval = null
       }
     }, 1000)
     // Do it the first time
-    setActionText(text + '\r\n' + time)
+    setDisplayText(props.text + '\r\n' + time)
 
     return countdownInterval
   }
@@ -87,23 +87,23 @@ const ActionText: FC<ActionTextProps> = (props) => {
 
   useEffect(() => {
     if (!firstMount.current && !props.started) {
-      setActionText(DEFAULT_TEXT)
       defaultSizeAnimation.start()
+      setDisplayText(props.text)
     }
   }, [props.started])
 
   useEffect(() => {
     if (!firstMount.current && props.started && props.paused) {
-      setActionText(PAUSE_TEXT)
       defaultSizeAnimation.start()
+      setDisplayText(props.text)
     }
   }, [props.paused])
 
   useEffect(() => {
-    if (!firstMount.current) {
+    if (!firstMount.current && props.inhale) {
       // Inhale (up)
       SharedIntervals.setInhaleCountdownInterval(
-        startCountdownDecrement('Inhale', props.breathDuration)
+        startCountdownDecrement(props.breathDuration)
       )
       setTextStyle({ ...textStyle, color: INHALE_COLOR })
       inhaleSizeAnimation.start()
@@ -111,18 +111,18 @@ const ActionText: FC<ActionTextProps> = (props) => {
   }, [props.inhale])
 
   useEffect(() => {
-    if (!firstMount.current) {
+    if (!firstMount.current && props.holdInhale) {
       SharedIntervals.setHoldInCountdownInterval(
-        startCountdownDecrement('Hold', props.holdDuration)
+        startCountdownDecrement(props.holdDuration)
       )
       setTextStyle({ ...textStyle, color: INHALE_COLOR })
     }
   }, [props.holdInhale])
 
   useEffect(() => {
-    if (!firstMount.current) {
+    if (!firstMount.current && props.exhale) {
       SharedIntervals.setExhaleCountdownInterval(
-        startCountdownDecrement('Exhale', props.breathDuration)
+        startCountdownDecrement(props.breathDuration)
       )
       setTextStyle({ ...textStyle, color: EXHALE_COLOR })
       exhaleSizeAnimation.start()
@@ -130,9 +130,9 @@ const ActionText: FC<ActionTextProps> = (props) => {
   }, [props.exhale])
 
   useEffect(() => {
-    if (!firstMount.current) {
+    if (!firstMount.current && props.holdExhale) {
       SharedIntervals.setHoldOutCountdownInterval(
-        startCountdownDecrement('Hold', props.holdDuration)
+        startCountdownDecrement(props.holdDuration)
       )
       setTextStyle({ ...textStyle, color: EXHALE_COLOR })
     }
@@ -142,7 +142,7 @@ const ActionText: FC<ActionTextProps> = (props) => {
     if (firstMount.current) firstMount.current = false
   }, [])
 
-  return <Text style={[styles.action, textStyle]}>{actionText}</Text>
+  return <Text style={[styles.action, textStyle]}>{displayText}</Text>
 }
 
 export default ActionText
