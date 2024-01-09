@@ -33,7 +33,6 @@ const Circle: FC<CircleProps> = (props) => {
   }
 
   const inhaleAnimation = () => {
-    console.log(`inhaleAnimation 0 ${props.boundingHeight}`)
     const config = generateAnimationConfig(props.breathDuration)
     circleLeft.value = withTiming(0  - HALF_LARGE_CIRCLE, config)
     circleBottom.value = withTiming(props.boundingHeight  - HALF_LARGE_CIRCLE, config)
@@ -41,7 +40,6 @@ const Circle: FC<CircleProps> = (props) => {
   }
 
   const holdInhaleAnimation = () => {
-    console.log(`holdInhaleAnimation  ${props.boundingWidth} ${props.boundingHeight}`)
     const config = generateAnimationConfig(props.holdDuration)
     circleLeft.value = withTiming(props.boundingWidth - HALF_LARGE_CIRCLE, config)
     circleBottom.value = withTiming(props.boundingHeight  - HALF_LARGE_CIRCLE, config)
@@ -49,7 +47,6 @@ const Circle: FC<CircleProps> = (props) => {
   }
 
   const exhaleAnimation = () => {
-    console.log(`exhaleAnimation ${props.boundingWidth} 0`)
     const config = generateAnimationConfig(props.breathDuration)
     circleLeft.value = withTiming(props.boundingWidth - HALF_SMALL_CIRCLE, config)
     circleBottom.value = withTiming(0 - HALF_SMALL_CIRCLE, config)
@@ -57,7 +54,6 @@ const Circle: FC<CircleProps> = (props) => {
   }
 
   const holdExhaleAnimation = () => {
-    console.log(`holdExhaleAnimation 0 0`)
     const config = generateAnimationConfig(props.holdDuration)
     circleLeft.value = withTiming(0 - HALF_SMALL_CIRCLE, config)
     circleBottom.value = withTiming(0 - HALF_SMALL_CIRCLE, config)
@@ -65,36 +61,33 @@ const Circle: FC<CircleProps> = (props) => {
   }
 
   useEffect(() => {
-    if (!firstMount.current) {
-      console.log("reset")
-      holdExhaleAnimation()
+    if (props.reset) {
+      circleLeft.value = withTiming(0 - HALF_SMALL_CIRCLE)
+      circleBottom.value = withTiming(0 - HALF_SMALL_CIRCLE)
+      circleSize.value = withTiming(SMALL_CIRCLE_SIZE)
     }
   }, [props.reset])
 
   useEffect(() => {
-    if (!firstMount.current) {
-      console.log("inhale")
+    if (!firstMount.current && props.inhale) {
       inhaleAnimation()
     }
   }, [props.inhale])
 
   useEffect(() => {
-    if (!firstMount.current) {
-      console.log("holdInhale")
+    if (!firstMount.current && props.holdInhale) {
       holdInhaleAnimation()
     }
   }, [props.holdInhale])
 
   useEffect(() => {
-    if (!firstMount.current) {
-      console.log("exhale")
+    if (!firstMount.current && props.exhale) {
       exhaleAnimation()
     }
   }, [props.exhale])
 
   useEffect(() => {
-    if (!firstMount.current) {
-      console.log("holdExhale")
+    if (!firstMount.current && props.holdExhale) {
       holdExhaleAnimation()
     }
   }, [props.holdExhale])
