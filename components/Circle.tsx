@@ -37,7 +37,7 @@ const Circle: FC<CircleProps> = (props) => {
     const config = generateAnimationConfig(props.breathDuration)
     circleLeft.value = withTiming(0  - HALF_LARGE_CIRCLE, config)
     circleBottom.value = withTiming(props.boundingHeight  - HALF_LARGE_CIRCLE, config)
-    circleSize.value = withTiming(LARGE_CIRCLE_SIZE)
+    circleSize.value = withTiming(LARGE_CIRCLE_SIZE, config)
   }
 
   const holdInhaleAnimation = () => {
@@ -45,7 +45,7 @@ const Circle: FC<CircleProps> = (props) => {
     const config = generateAnimationConfig(props.holdDuration)
     circleLeft.value = withTiming(props.boundingWidth - HALF_LARGE_CIRCLE, config)
     circleBottom.value = withTiming(props.boundingHeight  - HALF_LARGE_CIRCLE, config)
-    circleSize.value = withTiming(LARGE_CIRCLE_SIZE)
+    circleSize.value = withTiming(LARGE_CIRCLE_SIZE, config)
   }
 
   const exhaleAnimation = () => {
@@ -53,7 +53,7 @@ const Circle: FC<CircleProps> = (props) => {
     const config = generateAnimationConfig(props.breathDuration)
     circleLeft.value = withTiming(props.boundingWidth - HALF_SMALL_CIRCLE, config)
     circleBottom.value = withTiming(0 - HALF_SMALL_CIRCLE, config)
-    circleSize.value = withTiming(SMALL_CIRCLE_SIZE)
+    circleSize.value = withTiming(SMALL_CIRCLE_SIZE, config)
   }
 
   const holdExhaleAnimation = () => {
@@ -61,7 +61,7 @@ const Circle: FC<CircleProps> = (props) => {
     const config = generateAnimationConfig(props.holdDuration)
     circleLeft.value = withTiming(0 - HALF_SMALL_CIRCLE, config)
     circleBottom.value = withTiming(0 - HALF_SMALL_CIRCLE, config)
-    circleSize.value = withTiming(SMALL_CIRCLE_SIZE)
+    circleSize.value = withTiming(SMALL_CIRCLE_SIZE, config)
   }
 
   useEffect(() => {
