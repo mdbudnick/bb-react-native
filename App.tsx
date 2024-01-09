@@ -1,5 +1,6 @@
 import React, { type FC, type PropsWithChildren } from 'react'
 import { AppRegistry, StyleSheet, View } from 'react-native'
+import { LinearGradient } from 'expo-linear-gradient'
 import BreathBox from './components/BreathBox'
 import './assets/img/buddha-gnome.jpg'
 import { screenWidth } from './ts/windowDimensions'
@@ -16,17 +17,21 @@ const styles = StyleSheet.create({
     marginTop: '35%',
     alignSelf: 'center',
     width: '80%',
-    height: '70%'
+    height: '100%'
   }
 })
 
 const App: FC = (prop: PropsWithChildren) => {
   return (
-    <View
-      style={screenWidth < 1000 ? styles.centralResponsive : styles.central}
+    <LinearGradient
+      colors={['rgb(30, 50, 80)', 'rgb(182, 126, 82)', 'rgb(114, 124, 138)']}
     >
-      <BreathBox />
-    </View>
+      <View
+        style={screenWidth < 1000 ? styles.centralResponsive : styles.central}
+      >
+        <BreathBox />
+      </View>
+    </LinearGradient>
   )
 }
 

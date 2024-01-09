@@ -14,7 +14,7 @@ const PAUSE_TEXT = 'Paused'
 const styles = StyleSheet.create({
   breathBox: {
     position: 'relative',
-    height: '100%',
+    height: '65%',
     width: '100%',
     borderWidth: 2,
     borderColor: 'rgb(246, 192, 110)'
@@ -48,6 +48,9 @@ const BreathBox: FC = (prop: PropsWithChildren) => {
   const [inputMinutes, setInputMinutes] = useState<number>(10)
   const [inputSeconds, setInputSeconds] = useState<number>(0)
   const [ascending, setCountDirection] = useState<boolean>(true)
+  const [boundingHeight, setBoundingHeight] = useState<number>(null)
+  const [boundingWidth, setBoundingWidth] = useState<number>(null)
+
   const configInput: ConfigInput = {
     breathDuration,
     holdDuration,
@@ -143,6 +146,12 @@ const BreathBox: FC = (prop: PropsWithChildren) => {
     setActionText(PAUSE_TEXT)
   }
 
+  function onAppLayout (event): void {
+    const { width, height } = event.nativeEvent.layout;
+    setBoundingHeight(height)
+    setBoundingWidth(width)
+  }
+
   const ControlBarComponent = (
     <View>
       <ActionText
@@ -182,7 +191,7 @@ const BreathBox: FC = (prop: PropsWithChildren) => {
   )
 
   return (
-    <View style={styles.breathBox}>
+    <View style={styles.breathBox} onLayout={onAppLayout}>
       {timeReached
         ? (
         <Congrats
@@ -199,8 +208,8 @@ const BreathBox: FC = (prop: PropsWithChildren) => {
         { configOpen ? ConfigComponent : ControlBarComponent }
       </View>
       <Circle
-        boundingHeight={200}
-        boundingWidth={200}
+        boundingHeight={boundingHeight}
+        boundingWidth={boundingWidth}
         reset={reset}
         inhale={inhale}
         holdInhale={holdInhale}
