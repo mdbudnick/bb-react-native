@@ -23,9 +23,8 @@ const styles = StyleSheet.create({
     marginTop: '2%',
     marginBottom: '2%',
     paddingVertical: '1%',
-    backgroundColor: 'rgba(255, 255, 255, 0.8)',
   },
-  config: { fontSize: 28, margin: 10, color: 'grey' },
+  config: { fontSize: 28, margin: 10, color: 'grey', backgroundColor: 'white', borderRadius: 50 },
   topBuffer: {
     marginTop: '19%'
   }
@@ -47,10 +46,11 @@ const ControlBar: FC<ControlBarProps> = (props) => {
 
   return (
     <View
-      style={
+      style={[,
         props.started
           ? [styles.controlBar, styles.topBuffer]
           : [styles.controlBar]
+        ]
       }
     >
       {props.started
