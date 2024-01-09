@@ -6,7 +6,7 @@ import Config from './Config'
 import Congrats from './Congratulations'
 import { SharedIntervals } from '../ts/sharedIntervals'
 import { type ConfigSetters, type ConfigInput } from '../ts/shared'
-import { StyleSheet, View } from 'react-native'
+import { ImageBackground, StyleSheet, View } from 'react-native'
 
 const DEFAULT_TEXT = 'Breath Box'
 const PAUSE_TEXT = 'Paused'
@@ -191,34 +191,36 @@ const BreathBox: FC = (prop: PropsWithChildren) => {
   )
 
   return (
-    <View style={styles.breathBox} onLayout={onAppLayout}>
-      {timeReached
-        ? (
-        <Congrats
-          timeReached={timeReached}
-          setTimeReached={setTimeReached}
-          inputMinutes={inputMinutes}
-          inputSeconds={inputSeconds}
-        />
-          )
-        : (
-            []
-          )}
-      <View style={styles.breathBoxInner}>
-        { configOpen ? ConfigComponent : ControlBarComponent }
+      <View style={styles.breathBox} onLayout={onAppLayout}>
+        <ImageBackground source={require('../assets/img/buddha-gnome.jpg')}>
+        {timeReached
+          ? (
+          <Congrats
+            timeReached={timeReached}
+            setTimeReached={setTimeReached}
+            inputMinutes={inputMinutes}
+            inputSeconds={inputSeconds}
+          />
+            )
+          : (
+              []
+            )}
+        <View style={styles.breathBoxInner}>
+          { configOpen ? ConfigComponent : ControlBarComponent }
+        </View>
+        </ImageBackground>
+        <Circle
+          boundingHeight={boundingHeight}
+          boundingWidth={boundingWidth}
+          reset={reset}
+          inhale={inhale}
+          holdInhale={holdInhale}
+          exhale={exhale}
+          holdExhale={holdExhale}
+          breathDuration={breathDuration}
+          holdDuration={holdDuration}
+        ></Circle>
       </View>
-      <Circle
-        boundingHeight={boundingHeight}
-        boundingWidth={boundingWidth}
-        reset={reset}
-        inhale={inhale}
-        holdInhale={holdInhale}
-        exhale={exhale}
-        holdExhale={holdExhale}
-        breathDuration={breathDuration}
-        holdDuration={holdDuration}
-      ></Circle>
-    </View>
   )
 }
 
