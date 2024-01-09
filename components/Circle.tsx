@@ -2,7 +2,9 @@ import React, { type FC, useEffect, useRef } from 'react'
 import Animated, { Easing, useSharedValue, withTiming, type WithTimingConfig } from 'react-native-reanimated'
 
 const LARGE_CIRCLE_SIZE = 60
+const HALF_LARGE_CIRCLE = LARGE_CIRCLE_SIZE / 2
 const SMALL_CIRCLE_SIZE = 20
+const HALF_SMALL_CIRCLE = SMALL_CIRCLE_SIZE / 2
 const BREATH_CURVE = Easing.bezier(0.13, 0.38, 0.48, 1.02)
 
 interface CircleProps {
@@ -31,34 +33,34 @@ const Circle: FC<CircleProps> = (props) => {
   }
 
   const inhaleAnimation = () => {
-    console.log("inhaleAnimation")
+    console.log(`inhaleAnimation 0 ${props.boundingHeight}`)
     const config = generateAnimationConfig(props.breathDuration)
-    circleLeft.value = withTiming(20, config)
-    circleBottom.value = withTiming(200, config)
+    circleLeft.value = withTiming(0  - HALF_LARGE_CIRCLE, config)
+    circleBottom.value = withTiming(props.boundingHeight  - HALF_LARGE_CIRCLE, config)
     circleSize.value = withTiming(LARGE_CIRCLE_SIZE)
   }
 
   const holdInhaleAnimation = () => {
-    console.log("holdInhaleAnimation")
+    console.log(`holdInhaleAnimation  ${props.boundingWidth} ${props.boundingHeight}`)
     const config = generateAnimationConfig(props.holdDuration)
-    circleLeft.value = withTiming(200, config)
-    circleBottom.value = withTiming(200, config)
+    circleLeft.value = withTiming(props.boundingWidth - HALF_LARGE_CIRCLE, config)
+    circleBottom.value = withTiming(props.boundingHeight  - HALF_LARGE_CIRCLE, config)
     circleSize.value = withTiming(LARGE_CIRCLE_SIZE)
   }
 
   const exhaleAnimation = () => {
-    console.log("exhaleAnimation")
+    console.log(`exhaleAnimation ${props.boundingWidth} 0`)
     const config = generateAnimationConfig(props.breathDuration)
-    circleLeft.value = withTiming(200, config)
-    circleBottom.value = withTiming(20, config)
+    circleLeft.value = withTiming(props.boundingWidth - HALF_SMALL_CIRCLE, config)
+    circleBottom.value = withTiming(0 - HALF_SMALL_CIRCLE, config)
     circleSize.value = withTiming(SMALL_CIRCLE_SIZE)
   }
 
   const holdExhaleAnimation = () => {
-    console.log("holdExhaleAnimation")
+    console.log(`holdExhaleAnimation 0 0`)
     const config = generateAnimationConfig(props.holdDuration)
-    circleLeft.value = withTiming(20, config)
-    circleBottom.value = withTiming(20, config)
+    circleLeft.value = withTiming(0 - HALF_SMALL_CIRCLE, config)
+    circleBottom.value = withTiming(0 - HALF_SMALL_CIRCLE, config)
     circleSize.value = withTiming(SMALL_CIRCLE_SIZE)
   }
 
