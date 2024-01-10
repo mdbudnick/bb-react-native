@@ -132,7 +132,7 @@ const Timer: FC<TimerProps> = (props) => {
   }, [props.started])
 
   return (
-    <View style={{flexDirection: 'row', alignSelf: 'center'}}>
+    <View key="timer" style={{flexDirection: 'row', alignSelf: 'center'}}>
       <Text style={styles.timer}>{timerText}</Text>
       <TouchableOpacity onPress={props.paused ? resumeTimer : pauseTimer}>
         <Icon

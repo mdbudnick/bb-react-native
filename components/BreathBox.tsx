@@ -1,4 +1,4 @@
-import React, { useState, type FC, type PropsWithChildren } from 'react'
+import React, { type FC, type PropsWithChildren, useEffect, useState } from 'react'
 import ActionText from './ActionText'
 import Circle from './Circle'
 import ControlBar from './ControlBar'
@@ -125,6 +125,7 @@ const BreathBox: FC = (prop: PropsWithChildren) => {
     setStarted(true)
     setPaused(false)
     setReset(false)
+    setTimeReached(false)
     animateBreathing()
   }
 
@@ -149,8 +150,15 @@ const BreathBox: FC = (prop: PropsWithChildren) => {
     setBoundingWidth(width)
   }
 
+  useEffect(() => {
+    if (timeReached) {
+      stopBreathBox()
+    }
+  }, [timeReached])
+
   const ActionTextComponent = (
     <ActionText
+      key="ActionText"
       text={actionText}
       started={started}
       paused={paused}
@@ -165,9 +173,8 @@ const BreathBox: FC = (prop: PropsWithChildren) => {
   )
 
   const ControlBarComponent = (
-    <View style={{paddingTop: '50%'}}>
+    <View key="ControlBar" style={{paddingTop: '50%'}}>
       <ControlBar
-        key="ControlBar"
         started={started}
         setStarted={setStarted}
         paused={paused}
@@ -193,23 +200,22 @@ const BreathBox: FC = (prop: PropsWithChildren) => {
   return (
       <View style={styles.breathBox} onLayout={onAppLayout}>
         <ImageBackground source={require('../assets/img/buddha-gnome.jpg')}>
+        <View style={styles.breathBoxInner}>
         {timeReached
           ? (
           <Congrats
+            key="Congrats"
             timeReached={timeReached}
             setTimeReached={setTimeReached}
             inputMinutes={inputMinutes}
             inputSeconds={inputSeconds}
           />
             )
-          : (
-              []
-            )}
-        <View style={styles.breathBoxInner}>
-          { configOpen ? ConfigComponent : [ActionTextComponent, ControlBarComponent] }
+          : configOpen ? ConfigComponent : [ActionTextComponent, ControlBarComponent]
+        }
         </View>
-        </ImageBackground>
         <Circle
+          key="Circle"
           boundingHeight={boundingHeight}
           boundingWidth={boundingWidth}
           reset={reset}
@@ -220,6 +226,7 @@ const BreathBox: FC = (prop: PropsWithChildren) => {
           breathDuration={breathDuration}
           holdDuration={holdDuration}
         ></Circle>
+      </ImageBackground>
       </View>
   )
 }
