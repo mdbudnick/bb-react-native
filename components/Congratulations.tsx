@@ -11,21 +11,21 @@ interface CongratsProps {
 
 const styles = StyleSheet.create({
   congratulations: {
-    borderWidth: 2000,
+    textAlign: 'center',
+    borderWidth: 2,
     borderColor: 'rgba(0, 0, 0, 0.5)',
     position: 'absolute',
-    top: '50%',
-    left: '50%',
+    top: '45%',
+    left: '35%',
     transform: [{ translateX: -50 }, { translateY: -50 }],
-    width: screenWidth * (screenWidth <= 1000 ? 0.4 : 0.34),
-    padding: 20,
+    width: '60%',
+    padding: '5%',
     backgroundColor: 'rgba(255, 255, 255, 0.78)',
     zIndex: 1,
-    textAlign: 'center',
     fontSize: screenHeight * 2
   },
   closeCongrats: {
-    height: '20%',
+    textAlign: 'center',
     marginTop: '4%',
     borderWidth: 1,
     borderColor: 'darkgrey',
@@ -42,15 +42,16 @@ const Congrats: FC<CongratsProps> = (props) => {
 
   return (
     <View style={styles.congratulations}>
-      <Text>
+      <Text style={{ textAlign: 'center', fontWeight: '800' }}>
         Congratulations!
-        {'\n'}
-        You breathed for {props.inputMinutes} minutes and {props.inputSeconds}{' '}
-        seconds!
+        {'\n'}{'\n'}
+        You breathed for{'\n'}
+        { props.inputMinutes ? props.inputMinutes + ' minutes' : ''}
+        {props.inputSeconds ? (props.inputMinutes ? ' and ' : '') + props.inputSeconds + ' seconds' : '' }!
         {'\n'}
       </Text>
       <TouchableOpacity style={styles.closeCongrats} onPress={closeWindow}>
-        <Text>{'\n'}Close{'\n'}</Text>
+        <Text style={{ textAlign: 'center', color: 'darkgreen', fontWeight: '800' }}>Close</Text>
       </TouchableOpacity>
     </View>
   )
