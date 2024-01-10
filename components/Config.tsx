@@ -185,7 +185,7 @@ const Config: FC<ControlBarProps> = (props) => {
           props.configSetters.setCountDirection(!props.configInput.ascending)
         }}
       >
-        <View style={styles.configLine}>
+        {/* <View style={styles.configLine}>
           <Text style={styles.configLabel}>Counting: 
           <Text
             style={{ fontWeight: '800' }}
@@ -193,7 +193,7 @@ const Config: FC<ControlBarProps> = (props) => {
           {'\t'}{'\t'}{props.configInput.ascending ? 'UP' : 'DOWN'}
           </Text>
           </Text>
-        </View>
+        </View> */}
       </TouchableOpacity>
       <Pressable style={[commonStyles.bigGreenButton, { alignSelf: 'center' }]} onPress={validateAndSaveConfig}>
             <Text>Save Settings</Text>
