@@ -2,12 +2,12 @@
   "expo": {
     "name": "BreathBox",
     "slug": "BreathBox",
-    "version": "1.0.0",
+    "version": "Release 1.0",
     "orientation": "portrait",
-    "icon": "./assets/img/buddha-gnome-smaller.jpg",
+    "icon": "./assets/img/buddha-gnome-smaller.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/img/buddha-gnome-smaller.jpg",
+      "image": "./assets/img/buddha-gnome-smaller.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -19,12 +19,19 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/img/buddha-gnome.jpg",
-        "backgroundColor": "#ffffff"
-      }
+        "foregroundImage": "./assets/img/buddha-gnome.png",
+        "backgroundColor": "#ffffff",
+        "versionCode": "1.0.0"
+      },
+      "package": "com.michaelbudnick.breathbox"
     },
     "web": {
-      "favicon": "./assets/img/buddha-gnome-smaller.jpg"
+      "favicon": "./assets/img/buddha-gnome-smaller.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "a88c3b57-0257-47c5-bc93-75b5285fa606"
+      }
     }
   }
 }
