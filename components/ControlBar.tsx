@@ -20,14 +20,17 @@ interface ControlBarProps {
 
 const styles = StyleSheet.create({
   controlBar: {
-    marginTop: '2%',
-    marginBottom: '2%',
-    paddingVertical: '1%',
+    position: 'absolute',
+    bottom: -5,
+    width: '60%',
+    alignSelf: 'center',
+    alignItems: 'center',
+    paddingTop: '7%',
+    paddingBottom: '7%',
+    backgroundColor: 'rgba(255, 255, 255, 0.78)',
+    borderRadius: 15
   },
-  config: { fontSize: 28, margin: 10, color: 'grey', backgroundColor: 'white', borderRadius: 50 },
-  topBuffer: {
-    marginTop: '19%'
-  }
+  config: { fontSize: 32, paddingTop: 13, color: 'grey' }
 })
 
 const ControlBar: FC<ControlBarProps> = (props) => {
@@ -45,14 +48,7 @@ const ControlBar: FC<ControlBarProps> = (props) => {
   }
 
   return (
-    <View
-      style={[,
-        props.started
-          ? [styles.controlBar, styles.topBuffer]
-          : [styles.controlBar]
-        ]
-      }
-    >
+    <View style={[styles.controlBar]}>
       {props.started
         ? (
         <Timer

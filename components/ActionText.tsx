@@ -2,26 +2,23 @@ import React, { type FC, useEffect, useRef, useState } from 'react'
 import { StyleSheet, Text } from 'react-native'
 import { SharedIntervals } from '../ts/sharedIntervals'
 
-const INHALE_COLOR = '#0f5362'
+const INHALE_COLOR = '#4db79e'
 const EXHALE_COLOR = '#c08845'
-const RESET_ORANGE = '#f6786e'
 
-const INHALE_SIZE = 50
+const INHALE_SIZE = 60
 const EXHALE_SIZE = 25
-const DEFAULT_ACTION_FONT_SIZE = 30
+const DEFAULT_ACTION_FONT_SIZE = 40
 
 const styles = StyleSheet.create({
   action: {
-    fontWeight: 'bold',
     textAlign: 'center',
+    fontWeight: 'bold',
     fontSize: DEFAULT_ACTION_FONT_SIZE,
-    color: RESET_ORANGE,
+    color: INHALE_COLOR,
     borderRadius: 3,
-    opacity: 0.9,
-    padding: '1%',
-    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+    backgroundColor: 'rgba(255, 255, 255, 0.78)',
     textShadowColor: 'black',
-    textShadowOffset: { width: 0, height: 0 },
+    textShadowOffset: { width: 1, height: 1 },
     textShadowRadius: 0.5
   }
 })

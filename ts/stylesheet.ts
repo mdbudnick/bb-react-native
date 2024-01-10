@@ -20,8 +20,9 @@ const commonStyles = StyleSheet.create({
     borderColor: 'green',
     backgroundColor: 'lightgreen',
     borderRadius: 25,
-    padding: 20,
-    paddingVertical: 10
+    marginRight: 20,
+    padding: 25,
+    paddingVertical: 15
   }
 })
 

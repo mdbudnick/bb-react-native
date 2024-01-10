@@ -20,14 +20,11 @@ const styles = StyleSheet.create({
     borderColor: 'rgb(246, 192, 110)'
   },
   breathBoxInner: {
-    display: 'flex',
-    flexDirection: 'column-reverse',
     alignItems: 'center',
     height: '100%',
     width: '100%',
-    backgroundColor: 'transparent',
-    resizeMode: 'cover',
-    justifyContent: 'center'
+    justifyContent: 'flex-end',
+    paddingBottom: '14%'
   }
 })
 
@@ -152,20 +149,23 @@ const BreathBox: FC = (prop: PropsWithChildren) => {
     setBoundingWidth(width)
   }
 
+  const ActionTextComponent = (
+    <ActionText
+      text={actionText}
+      started={started}
+      paused={paused}
+      inhale={inhale}
+      holdInhale={holdInhale}
+      exhale={exhale}
+      holdExhale={holdExhale}
+      breathDuration={breathDuration}
+      holdDuration={holdDuration}
+      ascending={ascending}
+    />
+  )
+
   const ControlBarComponent = (
-    <View>
-      <ActionText
-        text={actionText}
-        started={started}
-        paused={paused}
-        inhale={inhale}
-        holdInhale={holdInhale}
-        exhale={exhale}
-        holdExhale={holdExhale}
-        breathDuration={breathDuration}
-        holdDuration={holdDuration}
-        ascending={ascending}
-      />
+    <View style={{paddingTop: '50%'}}>
       <ControlBar
         key="ControlBar"
         started={started}
@@ -206,7 +206,7 @@ const BreathBox: FC = (prop: PropsWithChildren) => {
               []
             )}
         <View style={styles.breathBoxInner}>
-          { configOpen ? ConfigComponent : ControlBarComponent }
+          { configOpen ? ConfigComponent : [ActionTextComponent, ControlBarComponent] }
         </View>
         </ImageBackground>
         <Circle
