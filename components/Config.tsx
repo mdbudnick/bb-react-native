@@ -21,7 +21,9 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     marginTop: '5%',
     color: 'white',
-    width: '50%'
+    width: '70%',
+    backgroundColor: 'rgba(255, 255, 255, 0.78)',
+    padding: 20
   },
   title: {
     fontSize: 30,
@@ -41,7 +43,7 @@ const styles = StyleSheet.create({
   input: {
     paddingHorizontal: 5,
     position: 'absolute',
-    left: '100%'
+    left: '80%'
   },
   grayOutline: {
     borderColor: 'gray',
@@ -193,7 +195,7 @@ const Config: FC<ControlBarProps> = (props) => {
           </Text>
         </View>
       </TouchableOpacity>
-      <Pressable style={commonStyles.bigGreenButton} onPress={validateAndSaveConfig}>
+      <Pressable style={[commonStyles.bigGreenButton, { alignSelf: 'center' }]} onPress={validateAndSaveConfig}>
             <Text>Save Settings</Text>
       </Pressable>  
     </View>
