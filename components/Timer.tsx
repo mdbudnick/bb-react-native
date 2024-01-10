@@ -24,22 +24,26 @@ interface TimerProps {
 
 const styles = StyleSheet.create({
   pause: {
-    marginTop: 5,
+    marginTop: 10,
     marginLeft: 10,
-    fontSize: 32,
+    borderColor: 'green',
+    borderWidth: 1,
+    fontSize: 42,
     display: 'none'
   },
   stop: {
-    height: 20,
-    width: 20,
-    marginTop: 11,
+    height: 30,
+    width: 30,
+    marginTop: 18,
     marginLeft: 10,
     backgroundColor: 'red',
+    borderColor: 'black',
+    borderWidth: 1,
     display: 'none'
   },
   timer: {
     alignSelf: 'center',
-    fontSize: screenHeight * 0.02,
+    fontSize: 32,
     color: 'black',
     padding: 5,
     paddingVertical: screenHeight * 0.01
@@ -133,7 +137,7 @@ const Timer: FC<TimerProps> = (props) => {
       <TouchableOpacity onPress={props.paused ? resumeTimer : pauseTimer}>
         <Icon
           name='play-pause'
-          color='lightgreen'
+          color='green'
           style={[styles.pause, { display: props.started ? 'flex' : 'none' }]}
         ></Icon>
       </TouchableOpacity>
