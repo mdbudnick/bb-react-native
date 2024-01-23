@@ -11,7 +11,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
             ref: main
 
@@ -28,8 +28,12 @@ jobs:
         run: |
           ORIGINAL_CRITICAL_VULNERABILITIES=$(npm audit --json | jq -r '.metadata.vulnerabilities | .critical')
           ORIGINAL_HIGH_VULNERABILITIES=$(npm audit --json | jq -r '.metadata.vulnerabilities | .high')
+          ORIGINAL_MODERATE_VULNERABILITIES=$(npm audit --json | jq -r '.metadata.vulnerabilities | .moderate')
+          ORIGINAL_LOW_VULNERABILITIES=$(npm audit --json | jq -r '.metadata.vulnerabilities | .low')
           echo "Original critical vulnerabilities count: $ORIGINAL_CRITICAL_VULNERABILITIES"
           echo "Original high vulnerabilities count: $ORIGINAL_HIGH_VULNERABILITIES"
+          echo "Original moderate vulnerabilities count: $ORIGINAL_MODERATE_VULNERABILITIES"
+          echo "Original low vulnerabilities count: $ORIGINAL_LOW_VULNERABILITIES"
 
       - name: Update dependencies
         run: |
@@ -37,10 +41,7 @@ jobs:
           npx npm-check-updates -u
           npm install
 
-      - name: Audit dependencies
-        run: npm audit
-
-      - name: Check for vulnerabilities
+      - name: Check for new vulnerabilities
         run: |
           CURRENT_CRITICAL_VULNERABILITIES=$(npm audit --json | jq -r '.metadata.vulnerabilities | .critical')
           CURRENT_HIGH_VULNERABILITIES=$(npm audit --json | jq -r '.metadata.vulnerabilities | .high')
