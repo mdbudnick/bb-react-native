@@ -10,14 +10,14 @@
     "ts:check": "tsc"
   },
   "dependencies": {
-    "@types/react": "~18.2.55",
-    "expo": "~50.0.6",
-    "expo-linear-gradient": "~12.7.1",
+    "@types/react": "~18.2.57",
+    "expo": "~50.0.7",
+    "expo-linear-gradient": "~12.7.2",
     "expo-status-bar": "~1.11.1",
     "link": "^2.1.0",
     "react": "18.2.0",
     "react-native": "0.73.4",
-    "react-native-reanimated": "~3.7.0",
+    "react-native-reanimated": "~3.7.1",
     "react-native-vector-icons": "^10.0.3",
     "typescript": "^5.3.3"
   },
