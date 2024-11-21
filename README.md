@@ -10,8 +10,8 @@
 
 Breathbox is just a small example of my commitment to always learning new development practices. I invite you to make Breathbox a companion on your journey towards enhanced well-being and mindfulness!
 
-## How to run app locally
+  ## How to run app locally
 1. Install Expo Go app on your phone
-2. npx expo start
+2. npx expo start (fix any issues that arise in console)
 3. Scan the QR code and it will open on the phone
 
