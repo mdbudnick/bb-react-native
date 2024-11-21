@@ -1,6 +1,5 @@
 import React, { type FC, type PropsWithChildren } from 'react'
 import { AppRegistry, StyleSheet, View } from 'react-native'
-import { LinearGradient } from 'expo-linear-gradient'
 import BreathBox from './components/BreathBox'
 import './assets/img/buddha-gnome.jpg'
 import { screenWidth } from './ts/windowDimensions'
