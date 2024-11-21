@@ -7,8 +7,8 @@ export interface ActionStyle extends ViewStyle {
 }
 
 export interface ConfigInput {
-  firstColor: string
-  secondColor: string
+  exhaleColor: string
+  inhaleColor: string
   breathDuration: number
   holdDuration: number
   inputMinutes: number
@@ -18,8 +18,8 @@ export interface ConfigInput {
 
 export interface ConfigSetters {
   setConfigOpen: React.Dispatch<React.SetStateAction<boolean>>
-  setFirstColor: React.Dispatch<React.SetStateAction<string>>
-  setSecondColor: React.Dispatch<React.SetStateAction<string>>
+  setExhaleColor: React.Dispatch<React.SetStateAction<string>>
+  setInhaleColor: React.Dispatch<React.SetStateAction<string>>
   setBreathDuration: React.Dispatch<React.SetStateAction<number>>
   setHoldDuration: React.Dispatch<React.SetStateAction<number>>
   setInputMinutes: React.Dispatch<React.SetStateAction<number>>
