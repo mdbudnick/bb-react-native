@@ -40,6 +40,7 @@ const BreathBox: FC = (prop: PropsWithChildren) => {
   const [timeReached, setTimeReached] = useState<boolean>(false)
   const [actionText, setActionText] = useState<string>(DEFAULT_TEXT)
   // Config Variables
+  set [firstColor, setFirstColor] = useState<string>("")
   const [breathDuration, setBreathDuration] = useState<number>(3)
   const [holdDuration, setHoldDuration] = useState<number>(3)
   const [inputMinutes, setInputMinutes] = useState<number>(10)

@@ -5,8 +5,6 @@ import { SharedIntervals } from '../ts/sharedIntervals'
 const INHALE_COLOR = '#4db79e'
 const EXHALE_COLOR = '#c08845'
 
-const INHALE_SIZE = 60
-const EXHALE_SIZE = 25
 const DEFAULT_ACTION_FONT_SIZE = 40
 
 const styles = StyleSheet.create({
