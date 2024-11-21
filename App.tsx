@@ -23,15 +23,11 @@ const styles = StyleSheet.create({
 
 const App: FC = (prop: PropsWithChildren) => {
   return (
-    <LinearGradient
-      colors={['rgb(30, 50, 80)', 'rgb(182, 126, 82)', 'rgb(114, 124, 138)']}
-    >
       <View
         style={screenWidth < 1000 ? styles.centralResponsive : styles.central}
       >
         <BreathBox />
       </View>
-    </LinearGradient>
   )
 }
 
