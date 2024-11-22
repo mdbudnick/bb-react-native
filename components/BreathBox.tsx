@@ -10,8 +10,6 @@ import { ImageBackground, StyleSheet, View } from 'react-native'
 
 const DEFAULT_TEXT = 'Breath Box'
 const PAUSE_TEXT = 'Paused'
-const INHALE_COLOR = '#4db79e'
-const EXHALE_COLOR = '#c08845'
 
 const styles = StyleSheet.create({
   breathBox: {
@@ -42,8 +40,6 @@ const BreathBox: FC = (prop: PropsWithChildren) => {
   const [timeReached, setTimeReached] = useState<boolean>(false)
   const [actionText, setActionText] = useState<string>(DEFAULT_TEXT)
   // Config Variables
-  const [inhaleColor, setInhaleColor] = useState<string>(INHALE_COLOR)
-  const [exhaleColor, setExhaleColor] = useState<string>(EXHALE_COLOR)
   const [breathDuration, setBreathDuration] = useState<number>(3)
   const [holdDuration, setHoldDuration] = useState<number>(3)
   const [inputMinutes, setInputMinutes] = useState<number>(10)
@@ -57,8 +53,6 @@ const BreathBox: FC = (prop: PropsWithChildren) => {
     holdDuration,
     inputMinutes,
     inputSeconds,
-    inhaleColor,
-    exhaleColor,
     ascending
   }
   const configSetters: ConfigSetters = {
@@ -67,9 +61,7 @@ const BreathBox: FC = (prop: PropsWithChildren) => {
     setHoldDuration,
     setInputMinutes,
     setInputSeconds,
-    setCountDirection,
-    setInhaleColor,
-    setExhaleColor
+    setCountDirection
   }
 
   function animateBreathing (): void {
