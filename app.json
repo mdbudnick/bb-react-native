@@ -11,9 +11,7 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.michaelbudnick.breathbox"
@@ -21,8 +19,7 @@
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/img/buddha-gnome.png",
-        "backgroundColor": "#ffffff",
-        "versionCode": "2.0.0"
+        "backgroundColor": "#ffffff"
       },
       "package": "com.michaelbudnick.breathbox"
     },
@@ -33,6 +30,21 @@
       "eas": {
         "projectId": "a88c3b57-0257-47c5-bc93-75b5285fa606"
       }
-    }
+    },
+    "plugins": [
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "compileSdkVersion": 35,
+            "targetSdkVersion": 35,
+            "buildToolsVersion": "35.0.0"
+          },
+          "ios": {
+            "deploymentTarget": "15.1"
+          }
+        }
+      ]
+    ]
   }
 }
