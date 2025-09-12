@@ -7,7 +7,12 @@
     "android": "expo run:android",
     "ios": "expo run:ios",
     "web": "expo start --web",
-    "ts:check": "tsc"
+    "ts:check": "tsc",
+    "prebuild": "npx expo prebuild",
+    "eas:setup": "npm install -g eas-cli && eas login",
+    "eas:build": "eas build -p android",
+    "eas:submit": "eas submit -p android",
+    "deploy:android": "npm run prebuild && npm run eas:build"
   },
   "dependencies": {
     "@babel/plugin-proposal-export-namespace-from": "^7.18.9",
