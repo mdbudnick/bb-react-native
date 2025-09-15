@@ -2,7 +2,7 @@
   "expo": {
     "name": "BreathBox",
     "slug": "BreathBox",
-    "version": "Release 2.0",
+    "version": "Release 2.1",
     "orientation": "portrait",
     "icon": "./assets/img/buddha-gnome-smaller.png",
     "userInterfaceStyle": "light",
@@ -38,7 +38,8 @@
           "android": {
             "compileSdkVersion": 36,
             "targetSdkVersion": 36,
-            "buildToolsVersion": "36.0.0"
+            "buildToolsVersion": "36.0.0",
+            "kspVersion": "2.0.21-1.0.28"
           },
           "ios": {
             "deploymentTarget": "15.1"
